@@ -1,0 +1,7 @@
+# name: benchmark/ssb/sf100/q08.benchmark
+# description: Run query q08 from the ssb benchmark
+# group: [sf100]
+
+template benchmark/ssb/sf100/ssb_sf100.benchmark.in
+QUERY_NUMBER=8
+QUERY_NUMBER_PADDED=08
