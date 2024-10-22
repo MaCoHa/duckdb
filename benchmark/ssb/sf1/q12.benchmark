@@ -1,0 +1,7 @@
+# name: benchmark/ssb/sf1/q12.benchmark
+# description: Run query q12 from the ssb benchmark
+# group: [sf1]
+
+template benchmark/ssb/sf1/ssb_sf1.benchmark.in
+QUERY_NUMBER=12
+QUERY_NUMBER_PADDED=12

@@ -1,0 +1,17 @@
+# name: ${FILE_PATH}
+# description: ${DESCRIPTION}
+# group: [ssd-sf1]
+
+name DSQ${QUERY_NUMBER_PADDED}
+group ssd
+subgroup sf1
+
+storage persistent
+
+cache ssd_sf1.duckdb
+
+load benchmark/ssb/sf1/data/load.sql
+
+run benchmark/ssb/querys/q${QUERY_NUMBER_PADDED}.sql
+
+result benchmark/ssb/sf1/answers/q${QUERY_NUMBER_PADDED}.csv
