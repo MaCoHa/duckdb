@@ -1,0 +1,23 @@
+-- Q2.1
+
+SELECT
+    sum(LO_REVENUE),
+    D_YEAR,
+    P_BRAND
+FROM
+    lineorder
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+WHERE
+    P_CATEGORY = 'MFGR#12'
+    AND S_REGION = 'AMERICA'
+GROUP BY
+    D_YEAR,
+    P_BRAND
+ORDER BY
+    D_YEAR,
+    P_BRAND;

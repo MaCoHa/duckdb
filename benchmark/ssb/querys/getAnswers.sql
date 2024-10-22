@@ -1,0 +1,334 @@
+-- Q1.1
+COPY (
+        SELECT
+        sum(LO_EXTENDEDPRICE * LO_DISCOUNT) AS REVENUE
+    FROM
+        lineorder
+    JOIN
+        date ON LO_ORDERDATE = D_DATEKEY
+    WHERE
+        D_YEAR = 1993
+        AND LO_DISCOUNT BETWEEN 1 AND 3
+        AND LO_QUANTITY < 25
+    ) TO 'q01.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+-- Q1.2
+COPY (SELECT
+        sum(LO_EXTENDEDPRICE * LO_DISCOUNT) AS REVENUE
+    FROM
+        lineorder
+    JOIN
+        date ON LO_ORDERDATE = D_DATEKEY
+    WHERE
+        D_YEARMONTHNUM = 199401
+        AND LO_DISCOUNT BETWEEN 4 AND 6
+        AND LO_QUANTITY BETWEEN 26 AND 35
+    ) TO 'q02.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+
+
+-- Q1.3
+COPY (SELECT
+        sum(LO_EXTENDEDPRICE * LO_DISCOUNT) AS REVENUE
+    FROM
+        lineorder
+    JOIN
+        date ON LO_ORDERDATE = D_DATEKEY
+    WHERE
+        D_WEEKNUMINYEAR = 6
+        AND D_YEAR = 1994
+        AND LO_DISCOUNT BETWEEN 5 AND 7
+        AND LO_QUANTITY BETWEEN 26 AND 35
+    ) TO 'q03.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+
+
+
+-- Q2.1
+COPY (SELECT
+    sum(LO_REVENUE),
+    D_YEAR,
+    P_BRAND
+FROM
+    lineorder
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+WHERE
+    P_CATEGORY = 'MFGR#12'
+    AND S_REGION = 'AMERICA'
+GROUP BY
+    D_YEAR,
+    P_BRAND
+ORDER BY
+    D_YEAR,
+    P_BRAND
+    ) TO 'q04.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+
+-- Q2.2
+COPY (SELECT
+    sum(LO_REVENUE),
+    D_YEAR,
+    P_BRAND
+FROM
+    lineorder
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+WHERE
+    P_BRAND BETWEEN 'MFGR#2221' AND 'MFGR#2228'
+    AND S_REGION = 'ASIA'
+GROUP BY
+    D_YEAR,
+    P_BRAND
+ORDER BY
+    D_YEAR,
+    P_BRAND
+    ) TO 'q05.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+-- Q2.3
+
+
+COPY (SELECT
+    sum(LO_REVENUE),
+    D_YEAR,
+    P_BRAND
+FROM
+    lineorder
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+WHERE
+    P_BRAND = 'MFGR#2221'
+    AND S_REGION = 'EUROPE'
+GROUP BY
+    D_YEAR,
+    P_BRAND
+ORDER BY
+    D_YEAR,
+    P_BRAND
+    ) TO 'q06.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+
+-- Q3.1
+
+
+
+COPY (SELECT
+    C_NATION,
+    S_NATION,
+    D_YEAR,
+    sum(LO_REVENUE) AS REVENUE
+FROM
+    customer
+JOIN
+    lineorder ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+WHERE
+    C_REGION = 'ASIA'
+    AND S_REGION = 'ASIA'
+    AND D_YEAR BETWEEN 1992 AND 1997
+GROUP BY
+    C_NATION,
+    S_NATION,
+    D_YEAR
+ORDER BY
+    D_YEAR ASC,
+    REVENUE DESC) TO 'q07.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+-- Q3.2
+
+
+COPY (SELECT
+    C_CITY,
+    S_CITY,
+    D_YEAR,
+    sum(LO_REVENUE) AS REVENUE
+FROM
+    customer
+JOIN
+    lineorder ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+WHERE
+    C_NATION = 'UNITED STATES'
+    AND S_NATION = 'UNITED STATES'
+    AND D_YEAR BETWEEN 1992 AND 1997
+GROUP BY
+    C_CITY,
+    S_CITY,
+    D_YEAR
+ORDER BY
+    D_YEAR ASC,
+    REVENUE DESC
+    ) TO 'q08.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+-- Q3.3
+
+
+COPY (SELECT
+    C_CITY,
+    S_CITY,
+    D_YEAR,
+    sum(LO_REVENUE) AS revenue
+FROM
+    customer
+JOIN
+    lineorder ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+WHERE
+    C_CITY IN ('UNITED KI1', 'UNITED KI5')
+    AND S_CITY IN ('UNITED KI1', 'UNITED KI5')
+    AND D_YEAR BETWEEN 1992 AND 1997
+GROUP BY
+    C_CITY,
+    S_CITY,
+    D_YEAR
+ORDER BY
+    D_YEAR ASC,
+    revenue DESC
+    ) TO 'q09.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+-- Q3.4
+
+COPY (SELECT
+    C_CITY,
+    S_CITY,
+    D_YEAR,
+    sum(LO_REVENUE) AS revenue
+FROM
+    customer
+JOIN
+    lineorder ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+WHERE
+    C_CITY IN ('UNITED KI1', 'UNITED KI5')
+    AND S_CITY IN ('UNITED KI1', 'UNITED KI5')
+    AND D_YEARMONTH = 'Dec1997'
+GROUP BY
+    C_CITY,
+    S_CITY,
+    D_YEAR
+ORDER BY
+    D_YEAR ASC,
+    revenue DESC
+    ) TO 'q10.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+
+-- Q4.1
+
+
+COPY (SELECT
+    D_YEAR,
+    C_NATION,
+    sum(LO_REVENUE - LO_SUPPLYCOST) AS PROFIT
+FROM
+    date
+JOIN
+    lineorder ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    customer ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+WHERE
+    C_REGION = 'AMERICA'
+    AND S_REGION = 'AMERICA'
+    AND P_MFGR IN ('MFGR#1', 'MFGR#2')
+GROUP BY
+    D_YEAR,
+    C_NATION
+ORDER BY
+    D_YEAR,
+    C_NATION
+    ) TO 'q11.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+-- Q4.2
+
+
+
+COPY (SELECT
+    D_YEAR,
+    S_NATION,
+    P_CATEGORY,
+    sum(LO_REVENUE - LO_SUPPLYCOST) AS profit
+FROM
+    date
+JOIN
+    lineorder ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    customer ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+WHERE
+    C_REGION = 'AMERICA'
+    AND S_REGION = 'AMERICA'
+    AND D_YEAR IN (1997, 1998)
+    AND P_MFGR IN ('MFGR#1', 'MFGR#2')
+GROUP BY
+    D_YEAR,
+    S_NATION,
+    P_CATEGORY
+ORDER BY
+    D_YEAR,
+    S_NATION,
+    P_CATEGORY
+    ) TO 'q12.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+COPY (SELECT
+    D_YEAR,
+    S_CITY,
+    P_BRAND,
+    sum(LO_REVENUE - LO_SUPPLYCOST) AS profit
+FROM
+    date
+JOIN
+    lineorder ON LO_ORDERDATE = D_DATEKEY
+JOIN
+    customer ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    part ON LO_PARTKEY = P_PARTKEY
+WHERE
+    C_REGION = 'AMERICA'
+    AND S_NATION = 'UNITED STATES'
+    AND D_YEAR IN (1997, 1998)
+    AND P_CATEGORY = 'MFGR#14'
+GROUP BY
+    D_YEAR,
+    S_CITY,
+    P_BRAND
+ORDER BY
+    D_YEAR,
+    S_CITY,
+    P_BRAND
+    ) TO 'q13.csv' (FORMAT CSV, DELIMITER '|', HEADER);
+
+
+-- Q4.3
+
+

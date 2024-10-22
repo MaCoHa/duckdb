@@ -1,0 +1,26 @@
+-- Q3.3
+
+SELECT
+    C_CITY,
+    S_CITY,
+    D_YEAR,
+    sum(LO_REVENUE) AS revenue
+FROM
+    customer
+JOIN
+    lineorder ON LO_CUSTKEY = C_CUSTKEY
+JOIN
+    supplier ON LO_SUPPKEY = S_SUPPKEY
+JOIN
+    date ON LO_ORDERDATE = D_DATEKEY
+WHERE
+    C_CITY IN ('UNITED KI1', 'UNITED KI5')
+    AND S_CITY IN ('UNITED KI1', 'UNITED KI5')
+    AND D_YEAR BETWEEN 1992 AND 1997
+GROUP BY
+    C_CITY,
+    S_CITY,
+    D_YEAR
+ORDER BY
+    D_YEAR ASC,
+    revenue DESC;
