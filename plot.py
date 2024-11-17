@@ -119,20 +119,20 @@ dict["cumulative_cardinality"]["Q12"] = [thread_dict["t1"]["Q12"]["cumulative_ca
 
 plot_lines(["t1","t4","t8"], 
         dict["time"], 
-        title=f"Elasped time for querys with\n diffrent threads", 
+        title=f"Elasped time for querys", 
         xlabel="Amount of threads", 
-        ylabel="Elapsed Time (ms)", 
+        ylabel="Elapsed Time sec", 
         filename=f"threads_elapsed_time.png")
 plot_lines(["t1","t4","t8"], 
         dict["cumulative_rows_scanned"], 
-        title=f"Cumulative rows scanned with\n diffrent threads", 
+        title=f"Cumulative rows scanned", 
         xlabel="Amount of threads", 
         ylabel="million rows scanned", 
         filename=f"threads_cumulative_rows_scanned.png")
 
 plot_lines(["t1","t4","t8"], 
         dict["cumulative_cardinality"], 
-        title=f"Cumulative cardinality with\n diffrent threads", 
+        title=f"Cumulative cardinality", 
         xlabel="Amount of threads", 
         ylabel="million cardinalitys", 
         filename=f"threads_cumulative_cardinality.png")
@@ -154,20 +154,20 @@ dict["cumulative_cardinality"]["Q12"] = [scale_factore_dict["sf1"]["Q12"]["cumul
 
 plot_lines(["sf1","sf10","sf100"], 
         dict["time"], 
-        title=f"Elasped time for querys with\n diffrent scale factore", 
+        title=f"Elasped time for querys", 
         xlabel="Scale factore", 
-        ylabel="Elapsed Time (ms)", 
+        ylabel="Elapsed Time sec", 
         filename=f"SF_elapsed_time.png")
 plot_lines(["sf1","sf10","sf100"], 
         dict["cumulative_rows_scanned"], 
-        title=f"Cumulative rows scanned with\n diffrent scale factore", 
+        title=f"Cumulative rows scanned", 
         xlabel="Scale factore", 
         ylabel="million rows scanned", 
         filename=f"SF_cumulative_rows_scanned.png")
 
 plot_lines(["sf1","sf10","sf100"], 
         dict["cumulative_cardinality"], 
-        title=f"Cumulative cardinality with\n diffrent scale factore", 
+        title=f"Cumulative cardinality", 
         xlabel="Scale factore", 
         ylabel="million cardinalitys", 
         filename=f"SF_cumulative_cardinality.png")
