@@ -26,7 +26,7 @@ def plot_lines(x, ys, title="Line Plot", xlabel="X-axis", ylabel="Y-axis", filen
         line_style = line_styles[index]
         plt.plot(x, data, marker=marker, linestyle=line_style, label=key)
 
-
+    #plt.yscale('log')
     plt.legend()
     plt.title(title, fontsize=20)
     plt.xlabel(xlabel, fontsize=16)
@@ -144,9 +144,9 @@ dict["time"]["Q1"] = [scale_factore_dict["sf1"]["Q1"]["time"],scale_factore_dict
 dict["time"]["Q7"] = [scale_factore_dict["sf1"]["Q7"]["time"],scale_factore_dict["sf10"]["Q7"]["time"],scale_factore_dict["sf100"]["Q7"]["time"]]
 dict["time"]["Q12"] = [scale_factore_dict["sf1"]["Q12"]["time"],scale_factore_dict["sf10"]["Q12"]["time"],scale_factore_dict["sf100"]["Q12"]["time"]]
 
-dict["cumulative_rows_scanned"]["Q1"] = [scale_factore_dict["sf1"]["Q1"]["cumulative_rows_scanned"]/1_000_000,scale_factore_dict["sf10"]["Q1"]["cumulative_rows_scanned"]/1_000_000,scale_factore_dict["sf100"]["Q1"]["cumulative_rows_scanned"]/1_000_000]
-dict["cumulative_rows_scanned"]["Q7"] = [scale_factore_dict["sf1"]["Q7"]["cumulative_rows_scanned"]/1_000_000,scale_factore_dict["sf10"]["Q7"]["cumulative_rows_scanned"]/1_000_000,scale_factore_dict["sf100"]["Q7"]["cumulative_rows_scanned"]/1_000_000]
-dict["cumulative_rows_scanned"]["Q12"] = [scale_factore_dict["sf1"]["Q12"]["cumulative_rows_scanned"]/1_000_000,scale_factore_dict["sf10"]["Q12"]["cumulative_rows_scanned"]/1_000_000,scale_factore_dict["sf100"]["Q12"]["cumulative_rows_scanned"]/1_000_000]
+dict["cumulative_rows_scanned"]["Q1"] = [scale_factore_dict["sf1"]["Q1"]["cumulative_rows_scanned"]/1_000_000_000,scale_factore_dict["sf10"]["Q1"]["cumulative_rows_scanned"]/1_000_000_000,scale_factore_dict["sf100"]["Q1"]["cumulative_rows_scanned"]/1_000_000_000]
+dict["cumulative_rows_scanned"]["Q7"] = [scale_factore_dict["sf1"]["Q7"]["cumulative_rows_scanned"]/1_000_000_000,scale_factore_dict["sf10"]["Q7"]["cumulative_rows_scanned"]/1_000_000_000,scale_factore_dict["sf100"]["Q7"]["cumulative_rows_scanned"]/1_000_000_000]
+dict["cumulative_rows_scanned"]["Q12"] = [scale_factore_dict["sf1"]["Q12"]["cumulative_rows_scanned"]/1_000_000_000,scale_factore_dict["sf10"]["Q12"]["cumulative_rows_scanned"]/1_000_000_000,scale_factore_dict["sf100"]["Q12"]["cumulative_rows_scanned"]/1_000_000_000]
 
 dict["cumulative_cardinality"]["Q1"] = [scale_factore_dict["sf1"]["Q1"]["cumulative_cardinality"]/1_000_000,scale_factore_dict["sf10"]["Q1"]["cumulative_cardinality"]/1_000_000,scale_factore_dict["sf100"]["Q1"]["cumulative_cardinality"]/1_000_000]
 dict["cumulative_cardinality"]["Q7"] = [scale_factore_dict["sf1"]["Q7"]["cumulative_cardinality"]/1_000_000,scale_factore_dict["sf10"]["Q7"]["cumulative_cardinality"]/1_000_000,scale_factore_dict["sf100"]["Q7"]["cumulative_cardinality"]/1_000_000]
@@ -162,7 +162,7 @@ plot_lines(["sf1","sf10","sf100"],
         dict["cumulative_rows_scanned"], 
         title=f"Cumulative rows scanned", 
         xlabel="Scale factore", 
-        ylabel="million rows scanned", 
+        ylabel="billion rows scanned", 
         filename=f"SF_cumulative_rows_scanned.png")
 
 plot_lines(["sf1","sf10","sf100"], 
